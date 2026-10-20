@@ -76,12 +76,11 @@ bool enqueue(Queue& q, int nomor) {
     Node* baru = new Node{nomor, nullptr};
 
     if (isEmpty(q)) {
-      q.front = baru;
-      q.rear = baru;
-
+        q.depan = baru;
+        q.belakang = baru;
     } else {
-        q.rear->next = baru;
-        q.rear = baru;
+        q.belakang->next = baru;
+        q.belakang = baru;
     }
     return true;
 
@@ -91,17 +90,15 @@ bool enqueue(Queue& q, int nomor) {
 // SOAL 2 — dequeue()                                                  40 poin
 // =============================================================================
 bool dequeue(Queue& q, int& nomor) {
-  if (isEmpty(q)) {
-     return false;
+
+    if (isEmpty(q)) {
+        return false;
     }
-
-    Node* hapus = q.front;
-
+    Node* hapus = q.depan;
     nomor = hapus->data;
-    q.front = q.front->next;
-    if (q.front == nullptr) {
-        q.rear = nullptr;
-
+    q.depan = q.depan->next;
+    if (q.depan == nullptr) {
+        q.belakang = nullptr;
     }
     delete hapus;
     return true;
@@ -113,12 +110,11 @@ bool dequeue(Queue& q, int& nomor) {
 // =============================================================================
 void clear(Queue& q) {
     while (!isEmpty(q)) {
-        Node* hapus = q.front;
-        q.front = q.front->next;
+        Node* hapus = q.depan;
+        q.depan = q.depan->next;
         delete hapus;
     }
-    q.rear = nullptr;
-
+    q.belakang = nullptr;
 }
 
 // =============================================================================
